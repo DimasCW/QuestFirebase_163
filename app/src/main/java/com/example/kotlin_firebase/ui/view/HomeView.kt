@@ -160,7 +160,7 @@ fun MhsCard(
                     style = MaterialTheme.typography.titleLarge
                 )
                 Spacer(Modifier.weight(1f))
-                IconButton(onClick =  { onDeleteClick(mahasiswa)}) {
+                IconButton(onClick =  { onDeleteClick(viewModel.deleteMahasiswa(it))}) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = null,
