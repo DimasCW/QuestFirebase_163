@@ -71,6 +71,9 @@ class NetworkMahasiswaRepository(
 
                 }
             }
+        awaitClose{
+            mhsDocument.remove()
+        }
     }
 
 }
