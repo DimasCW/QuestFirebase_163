@@ -6,6 +6,7 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
 // Step 4
 //mendukung realtime dengan callbackflow
@@ -39,11 +40,25 @@ class NetworkMahasiswaRepository(
     }
 
     override suspend fun updateMahasiswa(nim: String, mahasiswa: Mahasiswa) {
-        TODO("Not yet implemented")
+        try {
+            firestore.collection("mahasiswa")
+                .document(mahasiswa.nim)
+                .set(mahasiswa)
+                .await()
+        }catch (e:Exception){
+            throw Exception("Gagal mengupdate data mahasiswa: ${e.message}")
+        }
     }
 
-    override suspend fun deleteMahasiswa(nim: String) {
-        TODO("Not yet implemented")
+    override suspend fun deleteMahasiswa(mahasiswa: Mahasiswa) {
+        try{
+            firestore.collection("mahasiswa")
+                .document(mahasiswa.nim)
+                .delete()
+                .await()
+        }catch (e : Exception){
+            throw Exception("Gagal menghapus data mahasiswa: ${e.message}")
+        }
     }
 
     override suspend fun getMahasiswaByNim(nim: String): Flow<Mahasiswa> {
