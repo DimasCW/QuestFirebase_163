@@ -26,4 +26,17 @@ class InsertViewModel(
         kelas = kelas,
         angkatan = angkatan
     )
+
+    data class FormErrorState(
+        val nim: String? = null,
+        val nama: String? = null,
+        val jenisKelamin: String? = null,
+        val alamat: String? = null,
+        val kelas: String? = null,
+        val angkatan: String? = null
+    ){
+        fun isValid() : Boolean{
+            return nim == null && nama == null && jenisKelamin == null && alamat == null && kelas == null && angkatan == null
+        }
+    }
 }
