@@ -12,8 +12,8 @@ data class Mahasiswa(
 )
 
 // Step 2 bikin constructor untuk memberi nilai default pada class
-{
-    constructor(
-
-    ):this(nim = "", nama = "", alamat = "", jenis_kelamin = "", kelas = "", angkatan = "")
-}
+//{
+//    constructor(
+//
+//    ):this(nim = "", nama = "", alamat = "", jenis_kelamin = "", kelas = "", angkatan = "")
+//}

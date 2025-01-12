@@ -72,6 +72,24 @@ class InsertViewModel(
     }
 }
 
+
+//Menyimpan input form ke dalam entity
+fun MahasiswaEvent.toMhsModel() : Mahasiswa = Mahasiswa(
+    nim = nim,
+    nama = nama,
+    jenis_kelamin = jenisKelamin,
+    alamat = alamat,
+    kelas = kelas,
+    angkatan = angkatan
+)
+
+sealed class FormState{
+    object Idle : FormState()
+    object Loading : FormState()
+    data class Success(val message: String) : FormState()
+    data class Error(val message: String) : FormState()
+}
+
 data class MahasiswaEvent(
     val nim: String = "",
     val nama: String = "",
@@ -81,15 +99,7 @@ data class MahasiswaEvent(
     val angkatan: String = ""
 )
 
-//Menyimpan input form ke dalam entity
-fun MahasiswaEvent.toMhsModel() : Mahasiswa = Mahasiswa(
-    nim = nim,
-    nama = nama,
-    jenisKelamin = jenisKelamin,
-    alamat = alamat,
-    kelas = kelas,
-    angkatan = angkatan
-)
+
 
 data class FormErrorState(
     val nim: String? = null,
@@ -109,9 +119,3 @@ data class InsertUiState(
     val isEntryValid: FormErrorState = FormErrorState(),
 )
 
-sealed class FormState{
-    object Idle : FormState()
-    object Loading : FormState()
-    data class Success(val message: String) : FormState()
-    data class Error(val message: String) : FormState()
-}

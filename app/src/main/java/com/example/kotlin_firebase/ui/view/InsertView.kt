@@ -35,6 +35,9 @@ import com.example.kotlin_firebase.ui.ViewModel.MahasiswaEvent
 import com.example.kotlin_firebase.ui.ViewModel.PenyediaViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kotlin_firebase.ui.ViewModel.FormErrorState
+
 
 @Composable
 fun InsertMhsView(
@@ -43,6 +46,7 @@ fun InsertMhsView(
     modifier: Modifier = Modifier,
     viewModel: InsertViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
+
     val uiState = viewModel.uiState //state utama unutk loading, success,
 
     val uiEvent = viewModel.uiEvent // Stat untuk form dan navigasi
@@ -107,7 +111,7 @@ fun InsertMhsView(
                 },
                 onClick = {
                     if (viewModel.validateFields()){
-                        viewModel.insertMhs()
+                        viewModel.insertMahasiswa()
                     }
                 }
             )
@@ -158,7 +162,8 @@ fun InsertBodyMhs(
 fun FormMahasiswa (
     mahasiswaEvent: MahasiswaEvent = MahasiswaEvent(),
     onValueChange: (MahasiswaEvent) -> Unit,
-    errorState: Modifier = Modifier
+    errorState: FormErrorState = FormErrorState(),
+    modifier: Modifier = Modifier
 ){
     val jenisKelalmin = listOf("Laki-laki", "Perempuan")
     val kelas = listOf("A","B","C","D","E")
