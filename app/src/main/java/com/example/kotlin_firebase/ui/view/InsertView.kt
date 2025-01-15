@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -39,6 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kotlin_firebase.ui.ViewModel.FormErrorState
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InsertMhsView(
     onBack: () -> Unit,
@@ -248,6 +250,49 @@ fun FormMahasiswa (
         Text(text = errorState.alamat ?: "",color = Color.Red)
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.dosen1,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(dosen1 = it))
+            },
+            label = { Text("Dosen 1") },
+            isError = errorState.dosen1 != null,
+            placeholder = { Text("Masukkan Nama Dosen 1")}
+        )
+        Text(text = errorState.dosen1 ?: "",color = Color.Red)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.dosen2,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(dosen2 = it))
+            },
+            label = { Text("Dosen 2") },
+            isError = errorState.dosen2 != null,
+            placeholder = { Text("Masukkan Nama Dosen 2")}
+        )
+        Text(text = errorState.dosen2 ?: "",color = Color.Red)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.judul_skripsi,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(judul_skripsi = it))
+            },
+            label = { Text("Judul Skripsi") },
+            isError = errorState.judul_skripsi != null,
+            placeholder = { Text("Masukkan Judul Skripsi")}
+        )
+        Text(text = errorState.judul_skripsi ?: "",color = Color.Red)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(text = "Kelas")
         Row{
             kelas.forEach{kelas ->

@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.kotlin_firebase.ui.navigation.PengelolaHalaman
 import com.example.kotlin_firebase.ui.theme.Kotlin_FirebaseTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,8 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Kotlin_FirebaseTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    PengelolaHalaman(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

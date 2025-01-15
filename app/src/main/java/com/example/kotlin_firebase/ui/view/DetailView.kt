@@ -1,4 +1,4 @@
-package com.example.firebase.ui.view
+package com.example.kotlin_firebase.ui.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,32 +34,32 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kotlin_firebase.model.Mahasiswa
-import com.example.kotlin_firebase.ui.ViewModel.HomeUiState
-import com.example.kotlin_firebase.ui.ViewModel.HomeViewModel
+import com.example.kotlin_firebase.ui.ViewModel.DetailUiState
+import com.example.kotlin_firebase.ui.ViewModel.DetailViewModel
 import com.example.kotlin_firebase.ui.ViewModel.PenyediaViewModel
 
 
 //STEP 9
-//Homescreen menampilkan loading message
+//Detailscreen menampilkan loading message
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
-    navigateToItemEntry: ()-> Unit,
+fun DetailScreen(
+    navigateToItemDetail: ()-> Unit,
     modifier: Modifier=Modifier,
     onDetailClick: (String) -> Unit={},
-    viewModel : HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
+    viewModel : DetailViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
-                title = {Text("Home")}
+                title = {Text("Detail")}
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = navigateToItemEntry,
+                onClick = navigateToItemDetail,
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(18.dp)
             ) {
@@ -67,13 +67,13 @@ fun HomeScreen(
             }
         }
     ){ innerPadding ->
-        HomeStatus(
-            homeUiState = viewModel.mhsUIState,
+        DetailStatus(
+            detailUiState = viewModel.mhsUIState,
             retryAction = { viewModel.getMhs() }, modifier = Modifier.padding(innerPadding),
             onDetailClick = onDetailClick,
             onDeleteClick = {
-                    viewModel.deleteMahasiswa(it)
-                            }
+                viewModel.deleteMahasiswa(it)
+            }
         )
     }
 }
@@ -90,7 +90,7 @@ fun OnLoading(modifier: Modifier = Modifier){
     }
 }
 
-//Homescreen menampilkan error message
+//Detailscreen menampilkan error message
 @Composable
 fun OnError(retryAction: ()->Unit, modifier: Modifier = Modifier,message:String){
     Column (
@@ -125,7 +125,7 @@ fun MhsLayout(
                     .clickable { onDetailClick(mahasiswa) },
                 onDeleteClick = {
                     onDeleteClick(mahasiswa.nim)
-                },
+                }
             )
         }
     }
@@ -184,19 +184,19 @@ fun MhsCard(
 }
 
 @Composable
-fun HomeStatus(
-    homeUiState: HomeUiState,
+fun DetailStatus(
+    detailUiState: DetailUiState,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     onDeleteClick: (Mahasiswa) -> Unit={},
     onDetailClick: (String) -> Unit
 ){
-    when(homeUiState) {
-        is HomeUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+    when(detailUiState) {
+        is DetailUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
 
-        is HomeUiState.Success ->
+        is DetailUiState.Success ->
             MhsLayout(
-                mahasiswa = homeUiState.mahasiswa, modifier = modifier.fillMaxWidth(),
+                mahasiswa = detailUiState.mahasiswa, modifier = modifier.fillMaxWidth(),
                 onDetailClick = {
                     onDetailClick(it.nim)
                 },
@@ -204,7 +204,7 @@ fun HomeStatus(
                     onDetailClick(it)
                 }
             )
-        is HomeUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize(), message = homeUiState.exception.
+        is DetailUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize(), message = detailUiState.exception.
         message ?: "Error")
     }
 }

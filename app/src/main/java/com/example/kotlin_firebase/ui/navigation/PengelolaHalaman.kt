@@ -6,8 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.kotlin_firebase.ui.view.HomeScreen
+import com.example.firebase.ui.view.HomeScreen
+import com.example.kotlin_firebase.ui.view.DetailScreen
 import com.example.kotlin_firebase.ui.view.InsertMhsView
+import com.example.kotlin_firebase.ui.view.MhsLayout
 
 @Composable
 fun PengelolaHalaman(
@@ -22,7 +24,11 @@ fun PengelolaHalaman(
     ){
         composable(DestinasiHome.route){
             HomeScreen(
-                navigateToItemEntry = { navController.navigate(DestinasiInsert.route) },
+                navigateToItemEntry = {
+                    navController.navigate(DestinasiInsert.route) },
+                onDetailClick = {
+                    navController.navigate(DestinasiDetail.route)
+                }
             )
         }
 
@@ -32,5 +38,15 @@ fun PengelolaHalaman(
                 onNavigate = { navController.navigate(DestinasiHome.route) }
             )
         }
+        composable(
+            route = DestinasiDetail.route
+        ){
+            MhsLayout(
+                onDetailClick =
+
+            )
+        }
+
+
     }
 }

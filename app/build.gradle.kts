@@ -74,7 +74,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 
-    implementation("libs.androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("libs.androidx.navigation:navigation-compose:2.8.3")
+    implementation("androidx.navigation:navigation-compose:2.8.3")
 }

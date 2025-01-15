@@ -12,17 +12,17 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 // Step 8
-sealed class HomeUiState {
-    data class Success(val mahasiswa: List<Mahasiswa>) : HomeUiState()
-    data class Error(val exception: Throwable) : HomeUiState()
-    object Loading : HomeUiState()
+sealed class DetailUiState {
+    data class Success(val mahasiswa: List<Mahasiswa>) : DetailUiState()
+    data class Error(val exception: Throwable) : DetailUiState()
+    object Loading : DetailUiState()
 }
 
-class HomeViewModel (
+class DetailViewModel (
     private val mhs: MahasiswaRepository
 ):ViewModel(){
-    var mhsUIState: HomeUiState by mutableStateOf(HomeUiState.Loading)
-    private set
+    var mhsUIState: DetailUiState by mutableStateOf(DetailUiState.Loading)
+        private set
 
     init {
         getMhs()
@@ -32,29 +32,29 @@ class HomeViewModel (
         viewModelScope.launch {
             mhs.getAllMahasiswa()
                 .onStart{
-                    mhsUIState = HomeUiState.Loading
+                    mhsUIState = DetailUiState.Loading
                 }
                 .catch{
-                    mhsUIState = HomeUiState.Error(it)
+                    mhsUIState = DetailUiState.Error(it)
                 }
                 .collect{
                     mhsUIState = if (it.isEmpty()) {
-                        HomeUiState.Error(Exception("Belum ada daftar mahasiswa"))
+                        DetailUiState.Error(Exception("Belum ada daftar mahasiswa"))
                     }else{
-                        HomeUiState.Success(it)
+                        DetailUiState.Success(it)
                     }
                 }
         }
-        }
+    }
     fun deleteMahasiswa(mahasiswa: Mahasiswa){
         viewModelScope.launch {
             try {
                 mhs.deleteMahasiswa(mahasiswa)
             }catch (e: Exception){
-                mhsUIState = HomeUiState.Error(e)
+                mhsUIState = DetailUiState.Error(e)
             }
         }
 
     }
-    }
+}
 
